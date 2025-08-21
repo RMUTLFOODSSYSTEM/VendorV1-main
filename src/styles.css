@@ -1,0 +1,74 @@
+:root {
+  --bs-success: #22c55e;        /* เขียวหลัก */
+  --bs-success-rgb: 34, 197, 94;
+}
+
+/* styles.css */
+.btn-custom-danger {
+  background-color: #ff1818; /* แดงเข้ม */
+  color: #f8f8f8;
+  border: none;
+}
+
+.btn-custom-danger:hover {
+  background-color: #ff0000; /* แดงเข้มขึ้นเมื่อ hover */
+}
+
+body{ background:#f8fafc; }
+
+/* โฟกัสปุ่ม toggle ไม่ให้มีกรอบหนา */
+.navbar-toggler:focus{ box-shadow:none; }
+
+
+/* ===== ตาราง: จัด "ราคา" และ "จัดการ" ===== */
+
+/* คอลัมน์ราคา (คอลัมน์ที่ 3) ให้อยู่กึ่งกลางทั้งหัวและข้อมูล */
+.table th:nth-child(3),
+.table td:nth-child(3) {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+/* คอลัมน์ "จัดการ" ให้อยู่กึ่งกลาง (ทับ .text-end เดิม) */
+.table th:last-child,
+.table td:last-child {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+/* ระยะปุ่มในคอลัมน์จัดการ */
+.table td:last-child .btn { margin: 0 .2rem; }
+
+
+
+/* ===== Mobile tidy-up ===== */
+/* มือถือ */
+@media (max-width: 576px) {
+  /* เปิดเลื่อนขวาใน wrapper ของ Bootstrap */
+  .table-responsive {
+    overflow-x: auto !important;   /* <— สำคัญ */
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch; /* เลื่อนลื่นบนมือถือ */
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.06);
+  }
+
+  /* บังคับความกว้างขั้นต่ำของตารางเพื่อให้เกิดการ scroll-x */
+  .table {
+    min-width: 560px;              /* ปรับตัวเลขได้ 520–640 ตามจำนวนคอลัมน์ */
+    font-size: .95rem;
+  }
+
+  .table th, .table td { 
+    padding: .55rem .6rem; 
+    white-space: nowrap;           /* ไม่ตัดคำทุกคอลัมน์ */
+  }
+  .table td:nth-child(2){
+    white-space: normal;           /* ยอมตัดบรรทัดเฉพาะคอลัมน์ชื่อเมนู */
+  }
+  .table td:last-child{ 
+    min-width: 140px;              /* คอลัมน์ปุ่มไม่โดนบีบ */
+  }
+}
+
+
