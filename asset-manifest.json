@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/VendorV1-main/static/css/main.64f2ef89.css",
+    "main.js": "/VendorV1-main/static/js/main.992d8817.js",
+    "index.html": "/VendorV1-main/index.html",
+    "main.64f2ef89.css.map": "/VendorV1-main/static/css/main.64f2ef89.css.map",
+    "main.992d8817.js.map": "/VendorV1-main/static/js/main.992d8817.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.64f2ef89.css",
+    "static/js/main.992d8817.js"
+  ]
+}
