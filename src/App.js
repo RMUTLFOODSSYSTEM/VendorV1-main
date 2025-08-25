@@ -1,34 +1,58 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import AppNavbar from "./components/AppNavbar";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import MenuManage from "./pages/MenuManage";
-import Profile from "./pages/Profile";
-import Orders from "./pages/Orders";
-import Notifications from "./pages/Notifications";
-import ForgotPassword from "./pages/ForgotPassword"; // ✅ เพิ่ม
+
+/* ===== ลูกค้า (Customer) ===== */
+import Home from "./pages/customer/Home";
+import Cart from "./pages/customer/Cart";
+import MyOrders from "./pages/customer/MyOrders";
+import CustomerLogin from "./pages/customer/Login";
+import CustomerRegister from "./pages/customer/Register";
+import Checkout from "./pages/customer/Checkout";
+import CustomerProfile from "./pages/customer/Profile";
+import CustomerNotifications from "./pages/customer/Notifications";
+import Vendors from "./pages/customer/Vendors";
+import VendorMenu from "./pages/customer/VendorMenu";
+
+/* ===== ร้านค้า (Vendor) ===== */
+import VendorLogin from "./pages/vendor/Login";
+import VendorRegister from "./pages/vendor/Register";
+import MenuManage from "./pages/vendor/MenuManage";
+import Profile from "./pages/vendor/Profile";
+import Orders from "./pages/vendor/Orders";
+import Notifications from "./pages/vendor/Notifications";
+import ForgotPassword from "./pages/vendor/ForgotPassword";
+
+
+/* boot state จาก localStorage */
+const getBootState = () => {
+  const email = localStorage.getItem("userEmail") || null;
+  const role  = localStorage.getItem("role") || null; // "customer" | "vendor" | null
+  return { authed: !!email, userEmail: email, role };
+};
 
 export default function App() {
-  const [authed, setAuthed] = useState(!!localStorage.getItem("userEmail"));
-  const [userEmail, setUserEmail] = useState(localStorage.getItem("userEmail"));
+  const boot = getBootState();
+  const [authed, setAuthed] = useState(boot.authed);
+  const [userEmail, setUserEmail] = useState(boot.userEmail);
+  const [role, setRole] = useState(boot.role);
 
-  // ✅ บันทึกอีเมลไว้ใน localStorage ด้วย เพื่อให้รีเฟรช/เข้าใหม่ยังจำได้
-  const handleLogin = (email) => {
+  const handleLogin = (email, userRole = "customer") => {
     if (email) localStorage.setItem("userEmail", email);
+    localStorage.setItem("role", userRole);
     setAuthed(true);
     setUserEmail(email || null);
+    setRole(userRole);
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("role");
     setAuthed(false);
     setUserEmail(null);
-    localStorage.removeItem("userEmail");
-    // (ออปชัน) ลบโปรไฟล์ที่แคชไว้
-    // localStorage.removeItem(`profile:${(userEmail || "").toLowerCase()}`);
+    setRole(null);
   };
 
-  // หน้า Landing ใช้เป็น "หน้าหลัก" เสมอ
   const Landing = () => (
     <div className="container py-5">
       <section className="bg-success bg-opacity-10 p-4 rounded-4 text-center mb-4">
@@ -58,25 +82,38 @@ export default function App() {
 
   return (
     <>
-      <AppNavbar authed={authed} onLogout={handleLogout} />
+      {/* ✅ ส่ง role ลง Navbar เพื่อให้สลับปุ่ม Login/Register ↔ Logout ได้ถูกต้อง */}
+      <AppNavbar authed={authed} role={role} onLogout={handleLogout} />
 
       <Routes>
-        {/* หน้าหลัก */}
+        {/* ===== ลูกค้า (ค่าเริ่มต้น) ===== */}
         <Route path="/" element={<Landing />} />
+        <Route path="/shop" element={<Home />} />
+        <Route path="/shop/cart" element={<Cart />} />
+        <Route path="/shop/checkout" element={<Checkout />} /> 
+        <Route path="/shop/orders" element={<MyOrders />} />
+        {/* หน้าเมนูหลักลูกค้า */}
+        <Route path="/customer/profile" element={<CustomerProfile />} />
+        <Route path="/customer/notifications" element={<CustomerNotifications />} />
+        <Route path="/shop/vendors" element={<Vendors />} />
+        <Route path="/shop/vendor/:vid" element={<VendorMenu />} />
 
-        {/* Auth */}
-        <Route path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} /> {/* ✅ เพิ่ม */}
+        {/* หน้า Auth ลูกค้า */}
+        <Route path="/login" element={<CustomerLogin onLogin={(email)=>handleLogin(email,"customer")} />} />
+        <Route path="/register" element={<CustomerRegister onLogin={(email)=>handleLogin(email,"customer")} />} />
+        
 
-        {/* หน้าฟีเจอร์ */}
-        <Route path="/menu" element={<MenuManage />} />
-        <Route path="/profile" element={<Profile authed={authed} userEmail={userEmail} />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path="/notifications" element={<Notifications />} />
+
+        {/* ===== ร้านค้า (อยู่ใต้ /vendor) ===== */}
+        <Route path="/vendor/login" element={<VendorLogin onLogin={(email)=>handleLogin(email,"vendor")} />} />
+        <Route path="/vendor/register" element={<VendorRegister />} />
+        <Route path="/vendor/forgot-password" element={<ForgotPassword />} />
+        <Route path="/vendor/menu" element={<MenuManage />} />
+        <Route path="/vendor/profile"element={<Profile authed={authed} userEmail={userEmail} />} />
+        <Route path="/vendor/orders" element={<Orders />} />
+        <Route path="/vendor/notifications" element={<Notifications />} />
       </Routes>
 
-      {/* footer ติดล่าง */}
       <footer className="text-center text-muted small py-2 bg-white border-top fixed-bottom">
         © {new Date().getFullYear()} RMUTL Shop. All rights reserved.
       </footer>

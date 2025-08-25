@@ -71,4 +71,54 @@ body{ background:#f8fafc; }
   }
 }
 
+/* ---- ปรับ input datetime-local ---- */
+.pickup-input {
+  max-width: 320px;   /* จำกัดความกว้าง ไม่ให้กินเต็ม */
+  min-width: 220px;
+  height: 40px;       /* ให้สูงเท่ากับปุ่มอื่น ๆ */
+}
+
+/* กลุ่มควบคุมจำนวน */
+.qty-group {
+  max-width: 100px;              /* รวมทั้งชุดไม่กว้างเกิน */
+}
+
+/* ปุ่ม − / + ขนาดเท่ากัน */
+.qty-btn {
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-color: #ced4da !important;  /* ให้กรอบสีเดียวกับ input */
+}
+
+/* ช่องตัวเลข: สูงเท่าปุ่ม + ข้อความกึ่งกลาง */
+.qty-input {
+  width: 56px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  text-align: center;
+  font-size: 14px;
+  line-height: 32px;             /* ช่วยจัดกึ่งกลางแนวตั้งในบางเบราว์เซอร์ */
+}
+
+/* ซ่อน spinner ของ number input (Chrome/Edge/Safari) */
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+.qty-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* ย่อเพิ่มสำหรับจอมือถือเล็ก ๆ */
+@media (max-width: 576px) {
+  .qty-group { max-width: 120px; }
+  .qty-btn   { width: 32px !important; height: 30px !important; }
+  .qty-input { width: 50px !important; height: 30px !important; line-height: 30px; font-size: 13px; }
+}
 

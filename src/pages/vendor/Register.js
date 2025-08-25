@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Container, Row, Col, Card, Form, Button, FloatingLabel } from "react-bootstrap";
+// ✅ เพิ่ม: ใช้ Link แทน <a>
+import { Link } from "react-router-dom";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -23,10 +25,10 @@ export default function Register() {
         <Col xs={12} sm={10} md={8} lg={5}>
           <Card className="border-0 rounded-4 shadow-sm">
             <Card.Body className="p-4 p-md-5">
-              <h1 className="h3 fw-bold text-center mb-4">Register</h1>
+              <h1 className="h3 fw-bold text-center mb-4">สมัครสมาชิก (ร้านค้า)</h1>
 
               <Form noValidate onSubmit={onSubmit}>
-                <FloatingLabel controlId="name" label="Full Name" className="mb-3">
+                <FloatingLabel controlId="name" label="ชื่อ" className="mb-3">
                   <Form.Control
                     type="text"
                     name="name"
@@ -38,7 +40,7 @@ export default function Register() {
                   />
                 </FloatingLabel>
 
-                <FloatingLabel controlId="email" label="Email" className="mb-3">
+                <FloatingLabel controlId="email" label="อีเมล" className="mb-3">
                   <Form.Control
                     type="email"
                     name="email"
@@ -50,7 +52,7 @@ export default function Register() {
                   />
                 </FloatingLabel>
 
-                <FloatingLabel controlId="password" label="Password" className="mb-3">
+                <FloatingLabel controlId="password" label="รหัสผ่าน" className="mb-3">
                   <Form.Control
                     type="password"
                     name="password"
@@ -63,7 +65,7 @@ export default function Register() {
                   />
                 </FloatingLabel>
 
-                <FloatingLabel controlId="confirmPassword" label="Confirm Password" className="mb-3">
+                <FloatingLabel controlId="confirmPassword" label="ยืนยันรหัสผ่าน" className="mb-3">
                   <Form.Control
                     type="password"
                     name="confirmPassword"
@@ -76,15 +78,16 @@ export default function Register() {
                 </FloatingLabel>
 
                 <Button type="submit" variant="success" size="lg" className="w-100">
-                  Create Account
+                  สร้างบัญชี
                 </Button>
               </Form>
 
               <p className="text-center text-muted mt-4 mb-0">
                 มีบัญชีอยู่แล้ว?{" "}
-                <a href="/login" className="link-success text-decoration-none">
+                {/* ✅ เปลี่ยนเป็น Link และชี้ไป /vendor/login */}
+                <Link to="/vendor/login" className="link-success text-decoration-none">
                   Login
-                </a>
+                </Link>
               </p>
             </Card.Body>
           </Card>
