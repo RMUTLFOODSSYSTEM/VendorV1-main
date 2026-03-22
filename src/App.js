@@ -2,6 +2,14 @@ import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import AppNavbar from "./components/AppNavbar";
 
+/* ===== แอดมิน (Admin) ===== */
+import AdminLogin from "./pages/admin/Login";
+import AdminDashboard from "./pages/admin/Dashboard";
+import AdminUsers from "./pages/admin/Users";
+import AdminVendors from "./pages/admin/Vendors";
+import AdminPayments from "./pages/admin/Payments";
+import AdminComplaints from "./pages/admin/Complaint";
+
 /* ===== ลูกค้า (Customer) ===== */
 import Home from "./pages/customer/Home";
 import Cart from "./pages/customer/Cart";
@@ -13,6 +21,7 @@ import CustomerProfile from "./pages/customer/Profile";
 import CustomerNotifications from "./pages/customer/Notifications";
 import Vendors from "./pages/customer/Vendors";
 import VendorMenu from "./pages/customer/VendorMenu";
+import CustomerComplaint from "./pages/customer/Complaint";
 
 /* ===== ร้านค้า (Vendor) ===== */
 import VendorLogin from "./pages/vendor/Login";
@@ -22,12 +31,13 @@ import Profile from "./pages/vendor/Profile";
 import Orders from "./pages/vendor/Orders";
 import Notifications from "./pages/vendor/Notifications";
 import ForgotPassword from "./pages/vendor/ForgotPassword";
-
+import VendorComplaint from "./pages/vendor/Complaint";
+import VendorReports from "./pages/vendor/Reports";
 
 /* boot state จาก localStorage */
 const getBootState = () => {
   const email = localStorage.getItem("userEmail") || null;
-  const role  = localStorage.getItem("role") || null; // "customer" | "vendor" | null
+  const role = localStorage.getItem("role") || null; // "customer" | "vendor" | "admin" | null
   return { authed: !!email, userEmail: email, role };
 };
 
@@ -61,7 +71,8 @@ export default function App() {
         </h1>
         <p className="text-muted">
           ระบบสั่งอาหารและสินค้าสำหรับนักศึกษาและบุคลากร RMUTL
-          <br />สะดวก รวดเร็ว ไม่ต้องรอคิวหน้าร้าน
+          <br />
+          สะดวก รวดเร็ว ไม่ต้องรอคิวหน้าร้าน
         </p>
       </section>
 
@@ -82,36 +93,61 @@ export default function App() {
 
   return (
     <>
-      {/* ✅ ส่ง role ลง Navbar เพื่อให้สลับปุ่ม Login/Register ↔ Logout ได้ถูกต้อง */}
       <AppNavbar authed={authed} role={role} onLogout={handleLogout} />
 
       <Routes>
-        {/* ===== ลูกค้า (ค่าเริ่มต้น) ===== */}
+        {/* ===== หน้าแรก ===== */}
         <Route path="/" element={<Landing />} />
+
+        {/* ===== แอดมิน ===== */}
+        <Route
+          path="/admin/login"
+          element={<AdminLogin onLogin={(email) => handleLogin(email, "admin")} />}
+        />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/users" element={<AdminUsers />} />
+        <Route path="/admin/vendors" element={<AdminVendors />} />
+        <Route path="/admin/payments" element={<AdminPayments />} />
+        <Route path="/admin/complaints" element={<AdminComplaints />} />
+
+        {/* ===== ลูกค้า ===== */}
         <Route path="/shop" element={<Home />} />
         <Route path="/shop/cart" element={<Cart />} />
-        <Route path="/shop/checkout" element={<Checkout />} /> 
+        <Route path="/shop/checkout" element={<Checkout />} />
         <Route path="/shop/orders" element={<MyOrders />} />
-        {/* หน้าเมนูหลักลูกค้า */}
-        <Route path="/customer/profile" element={<CustomerProfile />} />
-        <Route path="/customer/notifications" element={<CustomerNotifications />} />
         <Route path="/shop/vendors" element={<Vendors />} />
         <Route path="/shop/vendor/:vid" element={<VendorMenu />} />
 
-        {/* หน้า Auth ลูกค้า */}
-        <Route path="/login" element={<CustomerLogin onLogin={(email)=>handleLogin(email,"customer")} />} />
-        <Route path="/register" element={<CustomerRegister onLogin={(email)=>handleLogin(email,"customer")} />} />
-        
+        <Route path="/customer/profile" element={<CustomerProfile />} />
+        <Route path="/customer/notifications" element={<CustomerNotifications />} />
+        <Route path="/customer/complaint" element={<CustomerComplaint />} />
 
+        {/* ===== Auth ลูกค้า ===== */}
+        <Route
+          path="/login"
+          element={<CustomerLogin onLogin={(email) => handleLogin(email, "customer")} />}
+        />
+        <Route
+          path="/register"
+          element={<CustomerRegister onLogin={(email) => handleLogin(email, "customer")} />}
+        />
 
-        {/* ===== ร้านค้า (อยู่ใต้ /vendor) ===== */}
-        <Route path="/vendor/login" element={<VendorLogin onLogin={(email)=>handleLogin(email,"vendor")} />} />
+        {/* ===== ร้านค้า ===== */}
+        <Route
+          path="/vendor/login"
+          element={<VendorLogin onLogin={(email) => handleLogin(email, "vendor")} />}
+        />
         <Route path="/vendor/register" element={<VendorRegister />} />
         <Route path="/vendor/forgot-password" element={<ForgotPassword />} />
         <Route path="/vendor/menu" element={<MenuManage />} />
-        <Route path="/vendor/profile"element={<Profile authed={authed} userEmail={userEmail} />} />
+        <Route
+          path="/vendor/profile"
+          element={<Profile authed={authed} userEmail={userEmail} />}
+        />
         <Route path="/vendor/orders" element={<Orders />} />
         <Route path="/vendor/notifications" element={<Notifications />} />
+        <Route path="/vendor/complaint" element={<VendorComplaint />} />
+        <Route path="/vendor/reports" element={<VendorReports />} />
       </Routes>
 
       <footer className="text-center text-muted small py-2 bg-white border-top fixed-bottom">

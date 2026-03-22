@@ -66,7 +66,7 @@ export default function CustomerNotifications() {
                   <hr className="my-2" />
                   <div className="d-flex justify-content-between fw-bold">
                     <span>ยอดรวมทั้งสิ้น</span>
-                    <span>{fmtBaht(o.total)}</span>
+                    <span>{fmtBaht(o.subtotal)}</span>
                   </div>
                 </div>
               </Card.Body>
