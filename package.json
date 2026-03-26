@@ -1,7 +1,7 @@
 {
   "name": "vendorv1-main",
   "version": "1.0.0",
-  "homepage": "https://RMUTLFOODSSYSTEM.github.io/VendorV1-main",
+  "homepage": "https://RMUTLFOODSSYSTEM.github.io/VendorV1-main/",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
