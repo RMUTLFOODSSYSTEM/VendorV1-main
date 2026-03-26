@@ -1,0 +1,124 @@
+:root {
+  --bs-success: #22c55e;        /* เขียวหลัก */
+  --bs-success-rgb: 34, 197, 94;
+}
+
+/* styles.css */
+.btn-custom-danger {
+  background-color: #ff1818; /* แดงเข้ม */
+  color: #f8f8f8;
+  border: none;
+}
+
+.btn-custom-danger:hover {
+  background-color: #ff0000; /* แดงเข้มขึ้นเมื่อ hover */
+}
+
+body{ background:#f8fafc; }
+
+/* โฟกัสปุ่ม toggle ไม่ให้มีกรอบหนา */
+.navbar-toggler:focus{ box-shadow:none; }
+
+
+/* ===== ตาราง: จัด "ราคา" และ "จัดการ" ===== */
+
+/* คอลัมน์ราคา (คอลัมน์ที่ 3) ให้อยู่กึ่งกลางทั้งหัวและข้อมูล */
+.table th:nth-child(3),
+.table td:nth-child(3) {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+/* คอลัมน์ "จัดการ" ให้อยู่กึ่งกลาง (ทับ .text-end เดิม) */
+.table th:last-child,
+.table td:last-child {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+/* ระยะปุ่มในคอลัมน์จัดการ */
+.table td:last-child .btn { margin: 0 .2rem; }
+
+
+
+/* ===== Mobile tidy-up ===== */
+/* มือถือ */
+@media (max-width: 576px) {
+  /* เปิดเลื่อนขวาใน wrapper ของ Bootstrap */
+  .table-responsive {
+    overflow-x: auto !important;   /* <— สำคัญ */
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch; /* เลื่อนลื่นบนมือถือ */
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.06);
+  }
+
+  /* บังคับความกว้างขั้นต่ำของตารางเพื่อให้เกิดการ scroll-x */
+  .table {
+    min-width: 560px;              /* ปรับตัวเลขได้ 520–640 ตามจำนวนคอลัมน์ */
+    font-size: .95rem;
+  }
+
+  .table th, .table td { 
+    padding: .55rem .6rem; 
+    white-space: nowrap;           /* ไม่ตัดคำทุกคอลัมน์ */
+  }
+  .table td:nth-child(2){
+    white-space: normal;           /* ยอมตัดบรรทัดเฉพาะคอลัมน์ชื่อเมนู */
+  }
+  .table td:last-child{ 
+    min-width: 140px;              /* คอลัมน์ปุ่มไม่โดนบีบ */
+  }
+}
+
+/* ---- ปรับ input datetime-local ---- */
+.pickup-input {
+  max-width: 320px;   /* จำกัดความกว้าง ไม่ให้กินเต็ม */
+  min-width: 220px;
+  height: 40px;       /* ให้สูงเท่ากับปุ่มอื่น ๆ */
+}
+
+/* กลุ่มควบคุมจำนวน */
+.qty-group {
+  max-width: 100px;              /* รวมทั้งชุดไม่กว้างเกิน */
+}
+
+/* ปุ่ม − / + ขนาดเท่ากัน */
+.qty-btn {
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-color: #ced4da !important;  /* ให้กรอบสีเดียวกับ input */
+}
+
+/* ช่องตัวเลข: สูงเท่าปุ่ม + ข้อความกึ่งกลาง */
+.qty-input {
+  width: 56px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  text-align: center;
+  font-size: 14px;
+  line-height: 32px;             /* ช่วยจัดกึ่งกลางแนวตั้งในบางเบราว์เซอร์ */
+}
+
+/* ซ่อน spinner ของ number input (Chrome/Edge/Safari) */
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+.qty-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* ย่อเพิ่มสำหรับจอมือถือเล็ก ๆ */
+@media (max-width: 576px) {
+  .qty-group { max-width: 120px; }
+  .qty-btn   { width: 32px !important; height: 30px !important; }
+  .qty-input { width: 50px !important; height: 30px !important; line-height: 30px; font-size: 13px; }
+}
+
